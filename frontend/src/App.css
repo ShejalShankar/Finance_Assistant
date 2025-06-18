@@ -1,0 +1,202 @@
+body { 
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+  color: #111827;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  justify-content: center;
+}
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.app {
+  width: 95%;
+  max-width: 700px;
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #111;
+}
+
+textarea {
+  color: #111;              /* Dark text */
+  background-color: #f8f9fa; /* Optional: light background */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  resize: vertical;
+}
+
+.cta-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin-top: 0.8rem;
+}
+
+.cta-button:hover {
+  background-color: #0056b3;
+}
+
+.cta-button:disabled {
+  background-color: #a0cfff;
+  cursor: not-allowed;
+}
+
+
+button:hover {
+  background: #1e40af;
+}
+
+.response {
+  margin-top: 2rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 800px;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.response h2 {
+  margin-bottom: 0.5rem;
+  color: #222;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.4rem;
+}
+
+.response p {
+  margin-bottom: 1.2rem;
+  color: #333;
+}
+
+.response h3 {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  color: #444;
+}
+
+.response ul {
+  padding-left: 1.2rem;
+}
+
+.response li {
+  margin-bottom: 0.6rem;
+}
+
+.response a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.response a:hover {
+  text-decoration: underline;
+}
+
+.history-card {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.history-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.history-item summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.history-response {
+  padding: 0.5rem 1rem;
+  background-color: #f9fafb;
+  border-left: 3px solid #3b82f6;
+  margin-top: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.tag.bullish {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.tag.bearish {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+.tag.mixed {
+  background-color: #fefce2;
+  color: #621b99;
+}
