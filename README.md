@@ -1,8 +1,8 @@
 # Financial Insight Assistant
-An interactive, full-stack AI-powered assistant that analyzes real-time Reddit investor sentiment and overlays it with 5-day stock price data — giving users clear, concise insights into trending financial discussions.
+A full-stack, AI-powered assistant that interprets real-time Reddit investor sentiment and overlays it with 5-day stock price trends — delivering concise, actionable insights on trending market topics.
+Built to help users cut through noise, it combines conversational AI with financial data to reveal what retail investors are really thinking.
 
-## 🚀 Features
-
+## Features
 - 💬 Ask natural language questions like _“What’s going on with Tesla stock?”_
 - 🔍 Extracts ticker with over **92% accuracy** using rule-based NLP
 - 🧠 Uses **LangChain + Mistral (via Ollama)** for contextual understanding
@@ -11,5 +11,23 @@ An interactive, full-stack AI-powered assistant that analyzes real-time Reddit i
 - 🗂️ Remembers previous questions and supports **chat-style interface**
 - 🖥️ Built with modern full-stack technologies — React + FastAPI
 
-## 🧱 Architecture Overview
+## Tech Stack
+| Layer       | Tech                                              |
+|-------------|---------------------------------------------------|
+| Frontend    | React, TypeScript, TailwindCSS, Recharts          |
+| Backend     | FastAPI (Python)                                  |
+| AI Engine   | LangChain + Mistral 7B (via Ollama)               |
+| Embeddings  | HuggingFace Sentence Transformers                 |
+| Vector DB   | ChromaDB                                          |
+| Stock Data  | [yFinance](https://github.com/ranaroussi/yfinance) |
+| Sources     | Reddit (via API / scraped posts)                  |
+
+## Setup Instructions
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/yourusername/financial-insight-assistant.git
+cd financial-insight-assistant
+
 
