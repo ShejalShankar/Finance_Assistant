@@ -29,17 +29,19 @@ Built to help users cut through noise, it combines conversational AI with financ
 ```bash
 git clone https://github.com/yourusername/financial-insight-assistant.git
 cd financial-insight-assistant
-
+```
 ### 2. Start Backend
+```bash
 cd backend
 pip install -r requirements.txt
 ollama run mistral
 uvicorn api:app --reload
-
+```
 ### 3. Start Frontend
+```bash
 cd frontend
 npm install
 npm run dev
-
+```
 
 
