@@ -1,6 +1,5 @@
 # Financial Insight Assistant
-A full-stack, AI-powered assistant that interprets real-time Reddit investor sentiment and overlays it with 5-day stock price trends — delivering concise, actionable insights on trending market topics.
-Built to help users cut through noise, it combines conversational AI with financial data to reveal what retail investors are really thinking.
+Empowering investors to understand the pulse of the market, Financial Insight Assistant leverages conversational AI to reveal what retail traders are talking about—and whether their optimism matches the latest price moves. Instantly surface the hottest debates and data-driven opinions across Reddit, paired with smart trend visualizations, for informed, confident investing. Built with a modern stack—RAG for retrieval-augmented generation, FastAPI for efficient backend APIs, React for a seamless front end, plus integration with the Reddit and Yahoo Finance APIs to deliver rich, real‑time insights.
 
 ## Features
 - 💬 Ask natural language questions like _“What’s going on with Tesla stock?”_
