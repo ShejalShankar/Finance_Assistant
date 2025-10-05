@@ -42,7 +42,7 @@ cd frontend
 npm install
 npm run dev
 ```
-### UI
+### 4. UI
 A quick look at the current UI
 <img width="1200" height="851" alt="Screenshot (206)" src="https://github.com/user-attachments/assets/378f42bc-ba73-4d4b-8a96-81153f1b267e" />
 
