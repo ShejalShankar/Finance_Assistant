@@ -1,0 +1,29 @@
+.answer-card {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 2px 10px rgba(15,23,42,.04);
+}
+
+.answer-card .title {
+  font-size: 15px;
+  margin: 0 0 8px;
+  color: #0f172a;
+}
+
+.answer-card .content { color: #334155; line-height: 1.5; }
+
+.answer-card .sources {
+  margin-top: 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.answer-card .source-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.answer-card .source-link:hover { text-decoration: underline; }

@@ -1,38 +1,21 @@
-import './Sidebar.css';
-import { useState } from 'react';
+import React from "react";
+import "./styles/Sidebar.css";
 
-type SidebarProps = {
-  questions: string[];
-  onSelect: (q: string) => void;
-  isOpen: boolean;
-  toggleSidebar: () => void;
-};
-
-export default function Sidebar({ questions, onSelect, isOpen, toggleSidebar }: SidebarProps) {
-  const [active, setActive] = useState<string | null>(null);
-
-  const handleClick = (q: string) => {
-    setActive(q);
-    onSelect(q);
-  };
+export default function Sidebar() {
+  const IconBtn = ({ label, children }: React.PropsWithChildren<{ label: string }>) => (
+    <button className="sb-icon" aria-label={label} title={label}>
+      {children}
+    </button>
+  );
 
   return (
-    <div className={`sidebar ${isOpen ? '' : 'closed'}`}>
-      <h2>Previous Questions</h2>
-      <button className="close-btn" onClick={toggleSidebar}>
-    ←
-  </button>
-      <ul>
-        {questions.map((q, idx) => (
-          <li
-            key={idx}
-            className={q === active ? 'active' : ''}
-            onClick={() => handleClick(q)}
-          >
-            {q}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <nav className="sidebar" aria-label="Primary">
+      <IconBtn label="Menu">≡</IconBtn>
+      <div className="sb-spacer" />
+      <IconBtn label="Dashboard">📊</IconBtn>
+      <IconBtn label="Account">👤</IconBtn>
+      <IconBtn label="Chat">💬</IconBtn>
+      <IconBtn label="Settings">⚙️</IconBtn>
+    </nav>
   );
 }
