@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+praw
+langchain
+langchain-community
+chromadb
+sentence-transformers
+
+yfinance
+requests

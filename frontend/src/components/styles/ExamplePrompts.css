@@ -1,0 +1,19 @@
+.try-asking {
+  max-width: 1060px;
+  margin: 10px auto 0;
+  padding: 0 24px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.suggestions {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin: 18px 16px auto 0; max-width: 960px; padding: 0 8px;
+}
+.suggestion-btn{
+  border:1px solid #e5e7eb; background:#fff; color:var(--text);
+  padding:10px 12px; border-radius:999px; font-size:14px; cursor:pointer;
+  transition: background .15s, border-color .15s, transform .04s;
+}
+.suggestion-btn:hover{ background:#f0f7ff; border-color:#bfdbfe }
+.suggestion-btn:active{ transform: translateY(1px) }

@@ -1,134 +1,127 @@
 import { useState } from "react";
-import "./App.css";
-import "./components/Sidebar.css";
 import Sidebar from "./components/Sidebar";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import QuestionBox from "./components/QuestionBox";
+import ExamplePrompts from "./components/ExamplePrompts";
+import AnswerCard from "./components/AnswerCard";
 import StockChart from "./components/StockChart";
+import "./App.css";
 
-type ResponseData = {
+// ---------------------------------------------
+// Ticker extraction helpers
+// ---------------------------------------------
+const TICKER_SYNONYMS: [RegExp, string][] = [
+  [/tesla|tsla/i, "TSLA"],
+  [/apple|aapl/i, "AAPL"],
+  [/alphabet|google|googl|goog/i, "GOOGL"],
+  [/microsoft|msft/i, "MSFT"],
+  [/nvidia|nvda/i, "NVDA"],
+  [/amazon|amzn/i, "AMZN"],
+  [/meta|facebook|fb/i, "META"],
+];
+
+function extractTicker(q: string): string | null {
+  for (const [re, t] of TICKER_SYNONYMS) if (re.test(q)) return t;
+  // fallback: plain ALL-CAPS ticker-like token
+  const m = q.match(/\b[A-Z]{2,5}\b/);
+  return m ? m[0] : null;
+}
+
+// ---------------------------------------------
+// Types for the answer card
+// ---------------------------------------------
+type Answer = {
   answer: string;
   sources: string[];
   sentiment?: string;
 };
 
-type HistoryEntry = {
-  question: string;
-  response: ResponseData;
-};
-
-function extractTicker(question: string): string | null {
-  const tickers = ["TSLA", "AAPL", "GOOG", "NVDA", "MSFT", "AMZN", "META"];
-  const match = tickers.find((t) => question.toUpperCase().includes(t));
-  return match || null;
-}
-
-function App() {
-  const [question, setQuestion] = useState("");
-  const [response, setResponse] = useState<ResponseData | null>(null);
+export default function App() {
+  const [question, setQuestion] = useState<string>("");
+  const [response, setResponse] = useState<Answer | null>(null);
   const [loading, setLoading] = useState(false);
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [ticker, setTicker] = useState<string | null>(null);
 
-  const handleAsk = async () => {
-    if (!question.trim()) return;
+  async function handleAsk(nextQ?: string) {
+    const q = (nextQ ?? question).trim();
+    if (!q) return;
+
+    // Reset state so chart cannot appear before the new answer
     setLoading(true);
     setResponse(null);
+    setTicker(null);
 
     try {
       const res = await fetch("http://localhost:8000/ask", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ question }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: q }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      // expected shape: { answer, sources, sentiment?, ticker? }
+      const data = await res.json();
+
+      // 1) paint the answer first
+      setResponse({
+        answer: data.answer,
+        sources: Array.isArray(data.sources) ? data.sources : [],
+        sentiment: data.sentiment ?? "neutral",
       });
 
-      const data = await res.json();
-      setResponse(data);
-      setHistory((prev) => [...prev, { question, response: data }]);
-      const detected = extractTicker(question);
-      setTicker(detected);
+      // 2) set ticker after the answer has been scheduled to render
+      const inferred = (data.ticker as string | undefined) ?? extractTicker(q);
+      setTimeout(() => setTicker(inferred ?? null), 0);
     } catch (err) {
-      console.error("Error:", err);
-      setResponse({ answer: "Something went wrong.", sources: [] });
+      console.error(err);
+      setResponse({
+        answer: "Sorry — I couldn’t fetch a response right now.",
+        sources: [],
+        sentiment: "neutral",
+      });
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSelectHistory = (entry: HistoryEntry) => {
-    setQuestion(entry.question);
-    setResponse(entry.response);
-  };
+  }
 
   return (
-    <div className="app-layout">
-      <Sidebar
-        questions={history.map((h) => h.question)}
-        onSelect={(q) => {
-          const found = history.find((h) => h.question === q);
-          if (found) handleSelectHistory(found);
-        }}
-        isOpen={isSidebarOpen}
-        toggleSidebar={() => setSidebarOpen((prev) => !prev)}
-      />
-      <div className="app-main">
-        <button
-          className="toggle-sidebar"
-          onClick={() => setSidebarOpen(!isSidebarOpen)}
-        >
-          ☰
-        </button>
-        <h1 className="branding">
-          <img src="/icon.png" alt="logo" className="logo" />
-          Financial Insight Assistant
-        </h1>
+    <div className="app">
+      <Sidebar />
+      <main className="main-content">
+        <Header />
+        <div className="center-col">
+          <Hero />
 
-        <div className="card input-card">
-          <textarea
-            placeholder="What are Reddit users saying about Nvidia this week?"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            rows={3}
-          />
-          <button onClick={handleAsk} disabled={loading} className="cta-button">
-            {loading ? "Thinking..." : "Ask"}
-          </button>
-        </div>
-
-        {response && (
-          <div className="card response">
-            <h2>Answer</h2>
-            <p>{response.answer || "No answer generated."}</p>
-            <h3>Sources</h3>
-            <ul>
-              {response.sources.length > 0 ? (
-                response.sources.map((url, idx) => {
-                  const shortLabel = url
-                    .split("/")
-                    .filter(Boolean)
-                    .pop()
-                    ?.replace(/_/g, " ")
-                    .slice(0, 60);
-                  return (
-                    <li key={idx}>
-                      <a href={url} target="_blank" rel="noopener noreferrer">
-                        {shortLabel || "Reddit Link"}
-                      </a>
-                    </li>
-                  );
-                })
-              ) : (
-                <li>No sources available.</li>
-              )}
-            </ul>
+          {/* Question box */}
+          <div className="ask-card">
+            <QuestionBox
+              question={question}
+              onChange={(v) => setQuestion(v)}
+              onAsk={() => handleAsk()}
+              loading={loading}
+            />
           </div>
-        )}
 
-        {ticker && <StockChart ticker={ticker} />}
-      </div>
+          {/* Answer first */}
+          {response && <AnswerCard response={response} />}
+
+          {/* Chart only after we have an answer & a ticker */}
+          {response && ticker && !loading && (
+            <div className="card" style={{ marginTop: 16 }}>
+              <StockChart ticker={ticker} />
+            </div>
+          )}
+
+          {/* Suggestions */}
+          <ExamplePrompts
+            onSelect={(prompt) => {
+              setQuestion(prompt);
+              handleAsk(prompt);
+            }}
+          />
+        </div>
+      </main>
     </div>
   );
 }
-
-export default App;
